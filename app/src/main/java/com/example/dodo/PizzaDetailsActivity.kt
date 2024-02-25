@@ -1,6 +1,7 @@
 package com.example.dodo
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -22,6 +23,8 @@ class PizzaDetailsActivity : AppCompatActivity() {
     }
 
     private fun getPizzaById(id: Int): Pizza? {
-        return PizzaData.getPizzaList().find { it.id == id }
+        val pizza = PizzaData.getPizzaList().find { it.id == id }
+        Log.d("PizzaDetailsActivity", "Looking for pizza with ID: $id, found: $pizza")
+        return pizza
     }
 }

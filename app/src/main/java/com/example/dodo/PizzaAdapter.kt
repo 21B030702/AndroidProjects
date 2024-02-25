@@ -1,5 +1,6 @@
 package com.example.dodo
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,17 +54,21 @@ class PizzaAdapter(private val pizzas: MutableList<Pizza>, private val onClick: 
     }
 
     override fun onBindViewHolder(holder: PizzaViewHolder, position: Int) {
-        val actualPosition = position % filteredPizzas.size
-        holder.bind(filteredPizzas[actualPosition], onClick)
+        if (filteredPizzas.isNotEmpty()) {
+            val actualPosition = position % filteredPizzas.size
+            holder.bind(filteredPizzas[actualPosition], onClick)
+        }
     }
 
-    override fun getItemCount() = Int.MAX_VALUE
+    override fun getItemCount() = if (filteredPizzas.isNotEmpty()) Int.MAX_VALUE else 0
 
     fun filter(query: String) {
-        filteredPizzas = pizzas.filter {
-            it.name.contains(query, ignoreCase = true) ||
-                    it.description.contains(query, ignoreCase = true)
+        val newFilteredPizzas = pizzas.filter {
+            it.name.contains(query, ignoreCase = true) || it.description.contains(query, ignoreCase = true)
         }.toMutableList()
+        Log.d("PizzaAdapter", "Filtering for query: $query, found: ${filteredPizzas.size} results")
+        filteredPizzas.clear()
+        filteredPizzas.addAll(newFilteredPizzas)
         notifyDataSetChanged()
     }
 }

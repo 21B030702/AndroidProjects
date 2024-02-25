@@ -2,6 +2,7 @@ package com.example.dodo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         searchView = findViewById(R.id.searchView)
 
         adapter = PizzaAdapter(pizzas.toMutableList()) { pizza ->
+            Log.d("MainActivity", "Pizza clicked: ${pizza.id}")
             val intent = Intent(this@MainActivity, PizzaDetailsActivity::class.java).apply {
                 putExtra("PIZZA_ID", pizza.id)
             }
